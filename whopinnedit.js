@@ -97,5 +97,5 @@ $(function() {
   })
 
   // Welcome.
-  //alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.")
+  alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.")
 })
