@@ -20,7 +20,9 @@ $(function() {
   $.fn.addRandomPinners = function(num) {
     this.each(function() {
       pin = $(this)
-      if (pin.find('.UserRecentActivity').length) { return true }
+      pinnerLink = pin.pinnerLink()
+      hasPinnerLink = pinnerLink.length
+      if (!hasPinnerLink) { return true }
 
       actualUsername = pin.pinnerLink().username()
 
