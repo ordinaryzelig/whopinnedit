@@ -48,6 +48,14 @@ $(function() {
     })
   }
 
+  // Change z-index of item and whopinnedit section
+  $.fn.zIndex = function(z) {
+    things = [$(this), $(this).find('.whopinnedit')]
+    _.each(things, function(ele) {
+      ele.css('z-index', z)
+    })
+  }
+
   // Reset in case they want to play again on same page.
   $('.whopinnedit').remove()
 
@@ -67,6 +75,10 @@ $(function() {
   pins.hidePinner()
   pins.addRandomPinners(2)
 
+  // Change z-index when hovering so it doesn't get covered up
+  pins.on('mouseover', function() { $(this).zIndex(999) })
+  pins.on('mouseout',  function() { $(this).zIndex('auto') })
+
   // Pinner clicked
   $('.whopinnedit a').on('click', function(event) {
     event.preventDefault()
@@ -85,5 +97,5 @@ $(function() {
   })
 
   // Welcome.
-  alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.")
+  //alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.")
 })
