@@ -70,6 +70,7 @@ $(function() {
   // Pinner clicked
   $('.whopinnedit a').on('click', function(event) {
     event.preventDefault()
+    event.stopPropagation()
     pinLink = $(this)
     parentPin = pinLink.parents('.item')
 
