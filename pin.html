@@ -3,104 +3,16 @@
   <title></title>
   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
   <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    $(function() {
-      // Username from pinnerLink
-      $.fn.username = function() {
-        href = $(this).attr('href')
-        return href.substr(1,href.length - 2)
-      }
-
-      $.fn.pinnerLink = function() {
-        return $(this).find('.pinUserAttribution a.firstAttribution')
-      }
-
-      $.fn.hidePinner = function() {
-        $(this).find('.pinUserAttribution').hide()
-      }
-
-      $.fn.showPinner = function() {
-        $(this).find('.pinUserAttribution').slideDown().delay(200)
-      }
-
-      $.fn.addRandomPinners = function(num) {
-        this.each(function() {
-          pin = $(this)
-          actualUsername = pin.pinnerLink().username()
-
-          availableUsernames = usernames.slice()
-          availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1)
-
-          randomUsernames = _.first(availableUsernames, num)
-          pinnerLinks = _.map(randomUsernames, function(username) {
-            return pinnersByUsername[username]
-          })
-          pinnerLinks.push(pinnersByUsername[actualUsername])
-          pinnerLinks = _.shuffle(pinnerLinks)
-
-          // Add div with pinnerLinks
-          pin.append(
-            '<div class="whopinnedit">' +
-            '<ul>' +
-            '</ul>' +
-            '</div>'
-          )
-          whopinnedit = pin.find('.whopinnedit')
-          ul = whopinnedit.find('ul')
-          _.each(pinnerLinks, function(pinnerLink) {
-            li = '<li>' + pinnerLink.outerHTML + '</li>'
-            ul.append(li)
-          })
-        })
-      }
-
-      pins = $('.item')
-
-      pinnerLinks = pins.pinnerLink()
-
-      // Gather usernames into array
-      // Group links into Hash
-      var usernames = []
-      var pinnersByUsername = {}
-      _.each(pinnerLinks, function(link) {
-        username =$(link).username()
-        usernames.push(username)
-        pinnersByUsername[username] = link
-      })
-
-      randomUsername = function(exceptUsername) {
-        idx = _.random(0, usernames.length - 1)
-        username = usernames[idx]
-        if (username == exceptUsername) {
-          return randomUsername(exceptUsername)
-        } else {
-          return username
-        }
-      }
-
-      pins.hidePinner()
-      pins.addRandomPinners(2)
-
-      // Pinner clicked.
-      $('.whopinnedit a').on('click', function(event) {
-        event.preventDefault()
-        pinLink = $(this)
-        parentPin = pinLink.parents('.item')
-
-        if (pinLink.username() == parentPin.pinnerLink().username()) {
-          color = '#5D9031'
-          parentPin.showPinner()
-        } else {
-          color = '#EE0A17'
-        }
-        pinLink.css('background-color', color)
-        pinLink.css('color', 'white')
-      })
-    })
-  </script>
 </head>
 
 <body>
+
+  <a href="javascript: (function () { 
+	var jsCode = document.createElement('script'); 
+	jsCode.setAttribute('src', 'file:///Users/ningja/dev/projects/whopinnedit/play.js');      			
+	jsCode.setAttribute('type', 'text/javascript');      			
+  document.body.appendChild(jsCode); 
+ }());">play!</a>
 
   <div class="item" data-col="1" style="top: 0px; left: 250px; height: 445px; visibility: visible;">
     <div class="Pin Module summary">
