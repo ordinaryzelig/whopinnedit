@@ -1,0 +1,182 @@
+<html>
+<head>
+  <title></title>
+  <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+  <script src="http://underscorejs.org/underscore-min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(function() {
+      // Username from pinnerLink
+      $.fn.username = function() {
+        href = $(this).attr('href')
+        return href.substr(1,href.length - 2)
+      }
+
+      $.fn.pinnerLink = function() {
+        return $(this).find('.pinUserAttribution a.firstAttribution')
+      }
+
+      $.fn.hidePinner = function() {
+        $(this).find('.pinUserAttribution').hide()
+      }
+
+      $.fn.showPinner = function() {
+        $(this).find('.pinUserAttribution').slideDown().delay(200)
+      }
+
+      $.fn.addRandomPinners = function(num) {
+        this.each(function() {
+          pin = $(this)
+          actualUsername = pin.pinnerLink().username()
+
+          availableUsernames = usernames.slice()
+          availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1)
+
+          randomUsernames = _.first(availableUsernames, num)
+          pinnerLinks = _.map(randomUsernames, function(username) {
+            return pinnersByUsername[username]
+          })
+          pinnerLinks.push(pinnersByUsername[actualUsername])
+          pinnerLinks = _.shuffle(pinnerLinks)
+
+          // Add div with pinnerLinks
+          pin.append(
+            '<div class="whopinnedit">' +
+            '<ul>' +
+            '</ul>' +
+            '</div>'
+          )
+          whopinnedit = pin.find('.whopinnedit')
+          ul = whopinnedit.find('ul')
+          _.each(pinnerLinks, function(pinnerLink) {
+            li = '<li>' + pinnerLink.outerHTML + '</li>'
+            ul.append(li)
+          })
+        })
+      }
+
+      pins = $('.item')
+
+      pinnerLinks = pins.pinnerLink()
+
+      // Gather usernames into array
+      // Group links into Hash
+      var usernames = []
+      var pinnersByUsername = {}
+      _.each(pinnerLinks, function(link) {
+        username =$(link).username()
+        usernames.push(username)
+        pinnersByUsername[username] = link
+      })
+
+      randomUsername = function(exceptUsername) {
+        idx = _.random(0, usernames.length - 1)
+        username = usernames[idx]
+        if (username == exceptUsername) {
+          return randomUsername(exceptUsername)
+        } else {
+          return username
+        }
+      }
+
+      pins.hidePinner()
+      pins.addRandomPinners(2)
+
+      // Pinner clicked.
+      $('.whopinnedit a').on('click', function(event) {
+        event.preventDefault()
+        pinLink = $(this)
+        parentPin = pinLink.parents('.item')
+
+        if (pinLink.username() == parentPin.pinnerLink().username()) {
+          color = '#5D9031'
+          parentPin.showPinner()
+        } else {
+          color = '#EE0A17'
+        }
+        pinLink.css('background-color', color)
+        pinLink.css('color', 'white')
+      })
+    })
+  </script>
+</head>
+
+<body>
+
+  <div class="item" data-col="1" style="top: 0px; left: 250px; height: 445px; visibility: visible;">
+    <div class="Pin Module summary">
+      <div class="pinWrapper">
+        <div class="pinHolder">
+          <div class="repinLikeWrapper">
+            <button class="rounded ShowModalButton Button primary Module primaryOnHover btn repinSmall" type="button"><em></em> <span class="accessibilityText">Pin it</span></button> <button class="rounded PinLikeButton Button Module likeSmall hasText btn" data-text-like="Like" data-text-unlike="Unlike" type="button"><em></em> <span class="buttonText">Like</span></button>
+          </div><a class="pinImageWrapper" href="/pin/20688479510775867/">
+          <h4 class="pinDomain">inkatrinaskitchen.com</h4>
+
+          <div class="fadeContainer loaded">
+          <div class="hoverMask"></div><img alt="" class="image pinImg fullBleed lazy loaded" src="http://media-cache-ec3.pinterest.com/236x/ab/96/dd/ab96dde72ad806fd094f1487fa0f6841.jpg" style="width: 236px;height: 314px;"></div></a>
+        </div>
+
+        <div class="pinMeta">
+          <p class="pinDescription">July 4th Layered Drinks</p>
+        </div>
+
+        <div class="pinUserAttribution">
+          <a class="attributionItem firstAttribution" href="/laurenzo125/"><img alt="" class="image attributionImg" src="http://media-cache-ec2.pinterest.com/avatars/laurenzo125-9_30.jpg" style=""> <span class="attributionTitle">Repinned by</span> <span class="attributionName">Lauren Evans</span></a> <a class="attributionItem lastAttribution" href="/laurenzo125/4th-of-july/"><img alt="" class="image attributionImg" src="http://media-cache-lt0.pinterest.com/upload/20688548227236263_board_thumbnail_2013-04-12-22-34-03_36455_60.jpg" style=""> <span class="attributionTitle">onto</span> <span class="attributionName">4th of July!</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item" data-col="0" style="top: 696px; left: 0px; height: 482px; visibility: visible;">
+    <div class="Pin Module summary">
+      <div class="pinWrapper">
+        <div class="pinHolder">
+          <div class="repinLikeWrapper">
+            <button class="rounded ShowModalButton Button primary Module primaryOnHover btn repinSmall" type="button"><em></em> <span class="accessibilityText">Pin it</span></button> <button class="rounded PinLikeButton Button Module likeSmall hasText btn" data-text-like="Like" data-text-unlike="Unlike" type="button"><em></em> <span class="buttonText">Like</span></button>
+          </div><a class="pinImageWrapper" href="/pin/219269075580069274/">
+          <h4 class="pinDomain">fitnessconcept.com.my</h4>
+
+          <div class="fadeContainer loaded">
+          <div class="hoverMask"></div><img alt="" class="image pinImg fullBleed lazy loaded" src="http://media-cache-is0.pinimg.com/236x/77/46/c1/7746c1ab743300c5b38fc0597af8cfa0.jpg" style="width: 236px;height: 334px;"></div></a>
+        </div>
+
+        <div class="pinMeta">
+          <p class="pinDescription">Heart rate chart for healthy exercise.</p>
+        </div>
+
+        <div class="pinUserAttribution">
+          <a class="attributionItem firstAttribution" href="/biomaj5/"><img alt="" class="image attributionImg" src="http://media-cache-ec2.pinterest.com/avatars/biomaj5_1350923187_30.jpg" style=""> <span class="attributionTitle">Repinned by</span> <span class="attributionName">Laura Battiest</span></a> <a class="attributionItem lastAttribution" href="/biomaj5/fitness/"><img alt="" class="image attributionImg" src="http://media-cache-is0.pinimg.com/upload/219269144296575667_board_thumbnail_2013-04-12-16-18-22_60839_60.jpg" style=""> <span class="attributionTitle">onto</span> <span class="attributionName">fitness</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="item" data-col="1" style="top: 1365px; left: 250px; height: 388px; visibility: visible;">
+    <div class="Pin Module summary">
+      <div class="pinWrapper">
+        <div class="pinHolder">
+          <div class="repinLikeWrapper">
+            <button class="rounded ShowModalButton Button primary Module primaryOnHover btn repinSmall" type="button"><em></em> <span class="accessibilityText">Pin it</span></button> <button class="rounded PinLikeButton Button Module likeSmall hasText btn" data-text-like="Like" data-text-unlike="Unlike" type="button"><em></em> <span class="buttonText">Like</span></button>
+          </div><a class="pinImageWrapper" href="/pin/102597697733634942/">
+          <h4 class="pinDomain">amermaidsblog.blogspot.it</h4>
+
+          <div class="fadeContainer loaded">
+          <div class="hoverMask"></div><img alt="" class="image pinImg fullBleed lazy loaded" src="http://media-cache-ec2.pinterest.com/236x/81/ee/9b/81ee9bea06b25d94686429794f78645c.jpg" style="width: 236px;height: 236px;"></div></a>
+        </div>
+
+        <div class="pinMeta">
+          <p class="pinDescription">Traditional Dutch Apple Pie</p>
+
+          <div class="pinAttribution">
+            <a href="http://www.flickr.com/photos/amermaidstale/"><img src="http://passets-ak.pinterest.com/images/api/attrib/flickr.png"> by â€¹shinâ€º</a>
+          </div>
+        </div>
+
+        <div class="pinUserAttribution">
+          <a class="attributionItem firstAttribution" href="/raccoonhandmade/"><img alt="" class="image attributionImg" src="http://media-cache-ec1.pinterest.com/avatars/raccoonhandmade_1354219320_30.jpg" style=""> <span class="attributionTitle">Repinned by</span> <span class="attributionName">Michelle Morgan</span></a> <a class="attributionItem lastAttribution" href="/raccoonhandmade/delectable/"><img alt="" class="image attributionImg" src="http://media-cache-is0.pinimg.com/upload/102597766450007000_board_thumbnail_2013-04-12-02-17-18_59048_60.jpg" style=""> <span class="attributionTitle">onto</span> <span class="attributionName">Delectable</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
