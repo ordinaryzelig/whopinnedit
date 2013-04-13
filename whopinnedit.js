@@ -1,101 +1,93 @@
-$(function() {
-  // Username from pinnerLink
-  $.fn.username = function() {
-    href = $(this).attr('href')
-    return href.substr(1,href.length - 2)
-  }
+(function() {
+  $(function() {
+    var pinnerLinks, pinnersByUsername, pins, usernames;
 
-  $.fn.pinnerLink = function() {
-    return $(this).find('.pinUserAttribution a.firstAttribution')
-  }
+    $.fn.username = function() {
+      var href;
 
-  $.fn.hidePinner = function() {
-    $(this).find('.pinUserAttribution').hide()
-  }
+      href = $(this).attr('href');
+      return href.substr(1, href.length - 2);
+    };
+    $.fn.pinnerLink = function() {
+      return $(this).find('.pinUserAttribution a.firstAttribution');
+    };
+    $.fn.hidePinner = function() {
+      return $(this).find('.pinUserAttribution').hide();
+    };
+    $.fn.showPinner = function() {
+      return $(this).find('.pinUserAttribution').slideDown().delay(200);
+    };
+    $.fn.addRandomPinners = function(num) {
+      return this.each(function() {
+        var actualUsername, availableUsernames, hasPinnerLink, pin, pinnerLink, pinnerLinks, randomUsernames, whopinnedit;
 
-  $.fn.showPinner = function() {
-    $(this).find('.pinUserAttribution').slideDown().delay(200)
-  }
+        pin = $(this);
+        pinnerLink = pin.pinnerLink();
+        hasPinnerLink = pinnerLink.length;
+        if (!hasPinnerLink) {
+          return true;
+        }
+        actualUsername = pin.pinnerLink().username();
+        availableUsernames = _.uniq(usernames);
+        availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1);
+        randomUsernames = _.first(availableUsernames, num);
+        pinnerLinks = _.map(randomUsernames, function(username) {
+          return pinnersByUsername[username];
+        });
+        pinnerLinks.push(pinnersByUsername[actualUsername]);
+        pinnerLinks = _.shuffle(pinnerLinks);
+        pin.find('.pinWrapper').append('<div class="whopinnedit"</div>');
+        whopinnedit = pin.find('.whopinnedit');
+        return _.each(pinnerLinks, function(pinnerLink) {
+          return whopinnedit.append(pinnerLink.outerHTML);
+        });
+      });
+    };
+    $.fn.zIndex = function(z) {
+      var things;
 
-  $.fn.addRandomPinners = function(num) {
-    this.each(function() {
-      pin = $(this)
-      pinnerLink = pin.pinnerLink()
-      hasPinnerLink = pinnerLink.length
-      if (!hasPinnerLink) { return true }
+      things = [$(this), $(this).find('.whopinnedit')];
+      return _.each(things, function(ele) {
+        return ele.css('z-index', z);
+      });
+    };
+    $('.whopinnedit').remove();
+    pins = $('.item');
+    pinnerLinks = pins.pinnerLink();
+    usernames = [];
+    pinnersByUsername = {};
+    _.each(pinnerLinks, function(link) {
+      var username;
 
-      actualUsername = pin.pinnerLink().username()
+      username = $(link).username();
+      usernames.push(username);
+      return pinnersByUsername[username] = link;
+    });
+    pins.hidePinner();
+    pins.addRandomPinners(2);
+    pins.on('mouseover', function() {
+      return $(this).zIndex(999);
+    });
+    pins.on('mouseout', function() {
+      return $(this).zIndex('auto');
+    });
+    $('.whopinnedit a').on('click', function(event) {
+      var color, correct, parentPin, pinLink;
 
-      availableUsernames = _.uniq(usernames)
-      availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1)
+      event.preventDefault();
+      event.stopPropagation();
+      pinLink = $(this);
+      parentPin = pinLink.parents('.item');
+      correct = pinLink.username() === parentPin.pinnerLink().username();
+      if (correct) {
+        color = 'rgba(93, 144, 49, 0.2)';
+        parentPin.showPinner();
+      } else {
+        color = 'rgba(238, 10, 10, 0.2)';
+      }
+      return pinLink.css('background-color', color);
+    });
+    return alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.");
+  });
 
-      randomUsernames = _.first(availableUsernames, num)
-      pinnerLinks = _.map(randomUsernames, function(username) {
-        return pinnersByUsername[username]
-      })
-      pinnerLinks.push(pinnersByUsername[actualUsername])
-      pinnerLinks = _.shuffle(pinnerLinks)
-
-      // Add div with pinnerLinks
-      pin.find('.pinWrapper').append(
-        '<div class="whopinnedit"' +
-        '</div>'
-      )
-      whopinnedit = pin.find('.whopinnedit')
-      _.each(pinnerLinks, function(pinnerLink) {
-        whopinnedit.append(pinnerLink.outerHTML)
-      })
-    })
-  }
-
-  // Change z-index of item and whopinnedit section
-  $.fn.zIndex = function(z) {
-    things = [$(this), $(this).find('.whopinnedit')]
-    _.each(things, function(ele) {
-      ele.css('z-index', z)
-    })
-  }
-
-  // Reset in case they want to play again on same page.
-  $('.whopinnedit').remove()
-
-  pins = $('.item')
-  pinnerLinks = pins.pinnerLink()
-
-  // Gather usernames into array
-  // Group links into Hash
-  var usernames = []
-  var pinnersByUsername = {}
-  _.each(pinnerLinks, function(link) {
-    username =$(link).username()
-    usernames.push(username)
-    pinnersByUsername[username] = link
-  })
-
-  pins.hidePinner()
-  pins.addRandomPinners(2)
-
-  // Change z-index when hovering so it doesn't get covered up
-  pins.on('mouseover', function() { $(this).zIndex(999) })
-  pins.on('mouseout',  function() { $(this).zIndex('auto') })
-
-  // Pinner clicked
-  $('.whopinnedit a').on('click', function(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    pinLink = $(this)
-    parentPin = pinLink.parents('.item')
-
-    correct = pinLink.username() == parentPin.pinnerLink().username()
-    if (correct) {
-      color = 'rgba(93, 144, 49, 0.2)'
-      parentPin.showPinner()
-    } else {
-      color = 'rgba(238, 10, 10, 0.2)'
-    }
-    pinLink.css('background-color', color)
-  })
-
-  // Welcome.
-  alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.")
-})
+}).call(this);

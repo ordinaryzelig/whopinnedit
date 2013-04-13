@@ -1,5 +1,4 @@
-WhoPinnedIt?
-===========
+= WhoPinnedIt?
 
 This is a Pinterest game where you guess which of your pinners pinned the pin.
 To play, just add the link below as a bookmark.
@@ -10,3 +9,9 @@ To play, just add the link below as a bookmark.
 	jsCode.setAttribute('type', 'text/javascript');      			
   document.body.appendChild(jsCode); 
  }());">WhoPinnedIt?</a>
+
+== TODO
+
+* Remove self as possible pinner
+* Scoreboard
+* Friend "comments"
