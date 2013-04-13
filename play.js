@@ -35,23 +35,21 @@ $(function() {
       pinnerLinks = _.shuffle(pinnerLinks)
 
       // Add div with pinnerLinks
-      pin.append(
-        '<div class="whopinnedit">' +
-        '<ul>' +
-        '</ul>' +
+      pin.find('.pinWrapper').append(
+        '<div class="whopinnedit"' +
         '</div>'
       )
       whopinnedit = pin.find('.whopinnedit')
-      ul = whopinnedit.find('ul')
       _.each(pinnerLinks, function(pinnerLink) {
-        li = '<li>' + pinnerLink.outerHTML + '</li>'
-        ul.append(li)
+        whopinnedit.append(pinnerLink.outerHTML)
       })
     })
   }
 
-  pins = $('.item')
+  // Reset in case they want to play again on same page.
+  $('.whopinnedit').remove()
 
+  pins = $('.item')
   pinnerLinks = pins.pinnerLink()
 
   // Gather usernames into array
@@ -67,19 +65,19 @@ $(function() {
   pins.hidePinner()
   pins.addRandomPinners(2)
 
-  // Pinner clicked.
+  // Pinner clicked
   $('.whopinnedit a').on('click', function(event) {
     event.preventDefault()
     pinLink = $(this)
     parentPin = pinLink.parents('.item')
 
-    if (pinLink.username() == parentPin.pinnerLink().username()) {
-      color = '#5D9031'
+    correct = pinLink.username() == parentPin.pinnerLink().username()
+    if (correct) {
+      color = 'rgba(93, 144, 49, 0.2)'
       parentPin.showPinner()
     } else {
-      color = '#EE0A17'
+      color = 'rgba(238, 10, 10, 0.2)'
     }
     pinLink.css('background-color', color)
-    pinLink.css('color', 'white')
   })
 })
