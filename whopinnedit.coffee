@@ -23,10 +23,15 @@ $ ->
 
       actualUsername = pin.pinnerLink().username()
 
-      availableUsernames = _.uniq(usernames)
-      availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1)
+      availableUsernames = _.chain(usernames)
+        .uniq()
+        .without(actualUsername, playerUsername)
+        .value()
 
-      randomUsernames = _.first(availableUsernames, num)
+      randomUsernames = _.chain(availableUsernames)
+        .shuffle()
+        .first(num)
+        .value()
       pinnerLinks = _.map randomUsernames, (username) ->
         pinnersByUsername[username]
       pinnerLinks.push(pinnersByUsername[actualUsername])
@@ -60,6 +65,7 @@ $ ->
     pinnersByUsername[username] = link
   )
 
+  playerUsername = $('.UserMenu a:first').username()
   pins.hidePinner()
   pins.addRandomPinners(2)
 

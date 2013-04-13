@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, scoreboard, usernames;
+    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, playerUsername, scoreboard, usernames;
 
     $.fn.username = function() {
       var href;
@@ -28,9 +28,8 @@
           return true;
         }
         actualUsername = pin.pinnerLink().username();
-        availableUsernames = _.uniq(usernames);
-        availableUsernames.splice(availableUsernames.indexOf(actualUsername), 1);
-        randomUsernames = _.first(availableUsernames, num);
+        availableUsernames = _.chain(usernames).uniq().without(actualUsername, playerUsername).value();
+        randomUsernames = _.chain(availableUsernames).shuffle().first(num).value();
         pinnerLinks = _.map(randomUsernames, function(username) {
           return pinnersByUsername[username];
         });
@@ -63,6 +62,7 @@
       usernames.push(username);
       return pinnersByUsername[username] = link;
     });
+    playerUsername = $('.UserMenu a:first').username();
     pins.hidePinner();
     pins.addRandomPinners(2);
     pins.on('mouseover', function() {
