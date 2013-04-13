@@ -13,5 +13,5 @@ To play, just add the link below as a bookmark.
 == TODO
 
 * Remove self as possible pinner
-* Scoreboard
 * Friend "comments"
+* New pins

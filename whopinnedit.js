@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var pinnerLinks, pinnersByUsername, pins, usernames;
+    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, scoreboard, usernames;
 
     $.fn.username = function() {
       var href;
@@ -15,7 +15,7 @@
       return $(this).find('.pinUserAttribution').hide();
     };
     $.fn.showPinner = function() {
-      return $(this).find('.pinUserAttribution').slideDown().delay(200);
+      return $(this).find('.pinUserAttribution').slideDown();
     };
     $.fn.addRandomPinners = function(num) {
       return this.each(function() {
@@ -78,15 +78,36 @@
       event.stopPropagation();
       pinLink = $(this);
       parentPin = pinLink.parents('.item');
+      if (pinLink.data('chosen') || parentPin.data('finished')) {
+        return;
+      }
+      pinLink.data('chosen', true);
       correct = pinLink.username() === parentPin.pinnerLink().username();
       if (correct) {
+        choseWisely(true);
+        parentPin.data('finished', true);
         color = 'rgba(93, 144, 49, 0.2)';
         parentPin.showPinner();
+        parentPin.find('.whopinnedit').delay(1000).slideUp();
       } else {
+        choseWisely(false);
         color = 'rgba(238, 10, 10, 0.2)';
       }
       return pinLink.css('background-color', color);
     });
+    correct = 0;
+    incorrect = 0;
+    $('body').append('<table id="scoreboard" style="width: 100px; height: 100px; position: fixed; top: 50; right: 70; background: white; z-index: 9999">\n  <caption>WhoPinnedIt?</caption>\n  <tbody>\n    <tr>\n      <th>Correct</th>\n      <td id="num-correct">0</td>\n    </tr>\n    <tr>\n      <th>Incorrect</th>\n      <td id="num-incorrect">0</td>\n    </tr>\n  </tbody>\n</table>');
+    scoreboard = $('#scoreboard');
+    choseWisely = function(bool) {
+      if (bool) {
+        correct++;
+        return $('#num-correct').html(correct);
+      } else {
+        incorrect++;
+        return $('#num-incorrect').html(incorrect);
+      }
+    };
     return alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.");
   });
 
