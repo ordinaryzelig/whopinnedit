@@ -128,7 +128,7 @@ $ ->
       #num-incorrect {
         background-color: red;
       }
-      #logo {
+      #logo a {
         color: red;
       }
     </style>
