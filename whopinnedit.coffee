@@ -129,8 +129,8 @@ $ ->
         background-color: red;
       }
       li#whopinnedit-logo {
-        width: 30;
-        height: 30;
+        width: 30px;
+        height: 30px;
         padding: 0;
       }
       #whopinnedit-logo a {
