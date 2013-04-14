@@ -70,7 +70,8 @@ $ ->
   pins.addRandomPinners(2)
 
   # Change z-index when hovering so it doesn't get covered up
-  pins.on 'mouseover', -> ( $(this).zIndex(999) )
+  menuZIndex = parseInt($('.headerBackground').css('z-index'))
+  pins.on 'mouseover', -> ( $(this).zIndex(menuZIndex - 1) )
   pins.on 'mouseout',  -> ( $(this).zIndex('auto') )
 
   # Pinner clicked

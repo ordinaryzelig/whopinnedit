@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, playerUsername, scoreboard, scoreboardHTML, usernames;
+    var choseWisely, correct, incorrect, menuZIndex, pinnerLinks, pinnersByUsername, pins, playerUsername, scoreboard, scoreboardHTML, usernames;
 
     $.fn.username = function() {
       var href;
@@ -65,8 +65,9 @@
     playerUsername = $('.UserMenu a:first').username();
     pins.hidePinner();
     pins.addRandomPinners(2);
+    menuZIndex = parseInt($('.headerBackground').css('z-index'));
     pins.on('mouseover', function() {
-      return $(this).zIndex(999);
+      return $(this).zIndex(menuZIndex - 1);
     });
     pins.on('mouseout', function() {
       return $(this).zIndex('auto');
