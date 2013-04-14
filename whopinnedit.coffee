@@ -132,6 +132,7 @@ $ ->
         width: 30px;
         height: 30px;
         padding: 0;
+        top: 0;
       }
       #whopinnedit-logo a {
         color: red;
