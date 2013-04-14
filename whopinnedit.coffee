@@ -133,7 +133,7 @@ $ ->
       }
     </style>
     <ul id="scoreboard">
-      <li id="logo">?</li>
+      <li id="logo" title="WhoPinnedIt?"><a href="http://ordinaryzelig.github.com/whopinnedit">?</a></li>
       <li id="num-correct">0</li>
       <li id="num-incorrect">0</li>
     </ul>
