@@ -138,13 +138,13 @@ $ ->
       }
     </style>
     <ul id="scoreboard">
+      <li id="num-correct">0</li>
+      <li id="num-incorrect">0</li>
       <li id="whopinnedit-logo" title="WhoPinnedIt?">
         <a href="http://ordinaryzelig.github.com/whopinnedit" target="_blank">
           <img src="https://raw.github.com/ordinaryzelig/whopinnedit/gh-pages/logo-small.png"/>
         </a>
       </li>
-      <li id="num-correct">0</li>
-      <li id="num-incorrect">0</li>
     </ul>
   '''
 
