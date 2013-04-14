@@ -128,12 +128,21 @@ $ ->
       #num-incorrect {
         background-color: red;
       }
+      li#logo {
+        width: 30;
+        height: 30;
+        padding: 0;
+      }
       #logo a {
         color: red;
       }
     </style>
     <ul id="scoreboard">
-      <li id="logo" title="WhoPinnedIt?"><a href="http://ordinaryzelig.github.com/whopinnedit" target="_blank">?</a></li>
+      <li id="logo" title="WhoPinnedIt?">
+        <a href="http://ordinaryzelig.github.com/whopinnedit" target="_blank">
+          <img src="https://raw.github.com/ordinaryzelig/whopinnedit/gh-pages/logo-small.png"/>
+        </a>
+      </li>
       <li id="num-correct">0</li>
       <li id="num-incorrect">0</li>
     </ul>

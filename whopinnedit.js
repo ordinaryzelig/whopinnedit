@@ -97,7 +97,7 @@
     });
     correct = 0;
     incorrect = 0;
-    scoreboardHTML = '<style>\n  #scoreboard {\n    float: right;\n    margin-right: 10px;\n  }\n  #scoreboard li {\n    display: inline-block;\n    width: 15px;\n    line-height: 15px;\n    font-size: 15pt;\n    text-align: center;\n    font-weight: bold;\n    padding: 10px;\n  }\n  #num-correct, #num-incorrect {\n    color: white;\n  }\n  #num-correct {\n    background-color: green;\n  }\n  #num-incorrect {\n    background-color: red;\n  }\n  #logo a {\n    color: red;\n  }\n</style>\n<ul id="scoreboard">\n  <li id="logo" title="WhoPinnedIt?"><a href="http://ordinaryzelig.github.com/whopinnedit" target="_blank">?</a></li>\n  <li id="num-correct">0</li>\n  <li id="num-incorrect">0</li>\n</ul>';
+    scoreboardHTML = '<style>\n  #scoreboard {\n    float: right;\n    margin-right: 10px;\n  }\n  #scoreboard li {\n    display: inline-block;\n    width: 15px;\n    line-height: 15px;\n    font-size: 15pt;\n    text-align: center;\n    font-weight: bold;\n    padding: 10px;\n  }\n  #num-correct, #num-incorrect {\n    color: white;\n  }\n  #num-correct {\n    background-color: green;\n  }\n  #num-incorrect {\n    background-color: red;\n  }\n  li#logo {\n    width: 30;\n    height: 30;\n    padding: 0;\n  }\n  #logo a {\n    color: red;\n  }\n</style>\n<ul id="scoreboard">\n  <li id="logo" title="WhoPinnedIt?">\n    <a href="http://ordinaryzelig.github.com/whopinnedit" target="_blank">\n      <img src="https://raw.github.com/ordinaryzelig/whopinnedit/gh-pages/logo-small.png"/>\n    </a>\n  </li>\n  <li id="num-correct">0</li>\n  <li id="num-incorrect">0</li>\n</ul>';
     $('.rightHeaderContent').after(scoreboardHTML);
     scoreboard = $('#scoreboard');
     choseWisely = function(bool) {
