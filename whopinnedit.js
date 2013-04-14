@@ -109,7 +109,7 @@
         return $('#num-incorrect').html(incorrect);
       }
     };
-    return alert("Ready to play? For each pin, I've randomly added some pinners. Click on the one you think who actually pinned it.");
+    return alert("Ready to play?\nFor each pin, I've randomly added some pinners.\nClick on the one you think who actually pinned it.\nYour score is at the top.\nHappy guessing!");
   });
 
 }).call(this);
