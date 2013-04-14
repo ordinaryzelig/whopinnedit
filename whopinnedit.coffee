@@ -132,7 +132,7 @@ $ ->
         width: 30px;
         height: 30px;
         padding: 0;
-        top: 0;
+        vertical-align: top;
       }
       #whopinnedit-logo a {
         color: red;
