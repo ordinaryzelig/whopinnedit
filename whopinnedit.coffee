@@ -38,7 +38,7 @@ $ ->
       pinnerLinks = _.shuffle(pinnerLinks)
 
       # Add div with pinnerLinks
-      pin.find('.pinWrapper').append '<div class="whopinnedit"</div>'
+      pin.find('.pinWrapper').append '<div class="whopinnedit pinUserAttribution"></div>'
       whopinnedit = pin.find('.whopinnedit')
       _.each pinnerLinks, (pinnerLink) ->
         whopinnedit.append(pinnerLink.outerHTML)
@@ -90,7 +90,7 @@ $ ->
       parentPin.data('finished', true)
       color = 'rgba(93, 144, 49, 0.2)'
       parentPin.showPinner()
-      parentPin.find('.whopinnedit').delay(1000).slideUp()
+      # parentPin.find('.whopinnedit').delay(1000).slideUp()
     else
       choseWisely(false)
       color = 'rgba(238, 10, 10, 0.2)'
@@ -100,22 +100,45 @@ $ ->
   correct = 0
   incorrect = 0
 
-  $('body').append '''
-    <table id="scoreboard" style="width: 100px; height: 100px; position: fixed; top: 50; right: 70; background: white; z-index: 9999">
-      <caption>WhoPinnedIt?</caption>
-      <tbody>
-        <tr>
-          <th>Correct</th>
-          <td id="num-correct">0</td>
-        </tr>
-        <tr>
-          <th>Incorrect</th>
-          <td id="num-incorrect">0</td>
-        </tr>
-      </tbody>
-    </table>
-    '''
+  ############
+  # Scoreboard
 
+  scoreboardHTML = '''
+    <style>
+      #scoreboard {
+        float: right;
+        margin-right: 10px;
+      }
+      #scoreboard li {
+        display: inline-block;
+        width: 15px;
+        line-height: 15px;
+        font-size: 15pt;
+        text-align: center;
+        font-weight: bold;
+        padding: 10px;
+      }
+      #num-correct, #num-incorrect {
+        color: white;
+      }
+      #num-correct {
+        background-color: green;
+      }
+      #num-incorrect {
+        background-color: red;
+      }
+      #logo {
+        color: red;
+      }
+    </style>
+    <ul id="scoreboard">
+      <li id="logo">?</li>
+      <li id="num-correct">0</li>
+      <li id="num-incorrect">0</li>
+    </ul>
+  '''
+
+  $('.rightHeaderContent').after scoreboardHTML
   scoreboard = $('#scoreboard')
   choseWisely = (bool) ->
     if bool

@@ -1,6 +1,6 @@
 (function() {
   $(function() {
-    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, playerUsername, scoreboard, usernames;
+    var choseWisely, correct, incorrect, pinnerLinks, pinnersByUsername, pins, playerUsername, scoreboard, scoreboardHTML, usernames;
 
     $.fn.username = function() {
       var href;
@@ -35,7 +35,7 @@
         });
         pinnerLinks.push(pinnersByUsername[actualUsername]);
         pinnerLinks = _.shuffle(pinnerLinks);
-        pin.find('.pinWrapper').append('<div class="whopinnedit"</div>');
+        pin.find('.pinWrapper').append('<div class="whopinnedit pinUserAttribution"></div>');
         whopinnedit = pin.find('.whopinnedit');
         return _.each(pinnerLinks, function(pinnerLink) {
           return whopinnedit.append(pinnerLink.outerHTML);
@@ -88,7 +88,6 @@
         parentPin.data('finished', true);
         color = 'rgba(93, 144, 49, 0.2)';
         parentPin.showPinner();
-        parentPin.find('.whopinnedit').delay(1000).slideUp();
       } else {
         choseWisely(false);
         color = 'rgba(238, 10, 10, 0.2)';
@@ -97,7 +96,8 @@
     });
     correct = 0;
     incorrect = 0;
-    $('body').append('<table id="scoreboard" style="width: 100px; height: 100px; position: fixed; top: 50; right: 70; background: white; z-index: 9999">\n  <caption>WhoPinnedIt?</caption>\n  <tbody>\n    <tr>\n      <th>Correct</th>\n      <td id="num-correct">0</td>\n    </tr>\n    <tr>\n      <th>Incorrect</th>\n      <td id="num-incorrect">0</td>\n    </tr>\n  </tbody>\n</table>');
+    scoreboardHTML = '<style>\n  #scoreboard {\n    float: right;\n    margin-right: 10px;\n  }\n  #scoreboard li {\n    display: inline-block;\n    width: 15px;\n    line-height: 15px;\n    font-size: 15pt;\n    text-align: center;\n    font-weight: bold;\n    padding: 10px;\n  }\n  #num-correct, #num-incorrect {\n    color: white;\n  }\n  #num-correct {\n    background-color: green;\n  }\n  #num-incorrect {\n    background-color: red;\n  }\n  #logo {\n    color: red;\n  }\n</style>\n<ul id="scoreboard">\n  <li id="logo">?</li>\n  <li id="num-correct">0</li>\n  <li id="num-incorrect">0</li>\n</ul>';
+    $('.rightHeaderContent').after(scoreboardHTML);
     scoreboard = $('#scoreboard');
     choseWisely = function(bool) {
       if (bool) {
